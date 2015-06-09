@@ -1,5 +1,5 @@
 # Description:
-#   Useful hubot script for Yamatai
+#   Useful hubot script for Cornell
 #   
 # Dependencies:
 #   None
@@ -41,6 +41,7 @@ hours = {
 
 module.exports = (robot) ->
 
+  # Restaurant Hours =================
   robot.respond /kft hours/i, (msg) ->
     msg.send hours["kft"]
 
