@@ -28,7 +28,17 @@ hours = {
         Fri 11:00 am - 2:00 am \n 
         Sat 12:00 pm - 12:00 am \n
         Sun 12:00 pm - 12:00 am "
+
+  chipotle: "Chipotle Hours: \n
+             Mon 11:00 am – 10:00 pm \n
+             Tue 11:00 am – 10:00 pm \n
+             Wed 11:00 am – 10:00 pm \n
+             Thu 11:00 am – 10:00 pm \n
+             Fri 11:00 am – 10:00 pm \n
+             Sat 11:00 am – 10:00 pm \n
+             Sun 11:00 am – 10:00 pm"
 }
+
 module.exports = (robot) ->
 
   robot.respond /kft hours/i, (msg) ->
@@ -36,6 +46,10 @@ module.exports = (robot) ->
 
   robot.respond /oth hours/i, (msg) ->
     msg.send hours["oth"]
+
+  robot.respond /chipotle hours/i, (msg) ->
+    msg.send hours["chipotle"]
+
 
 
   
