@@ -19,11 +19,23 @@ hours = {
         Fri 1:00 pm - 12:00 am  \n
         Sat 1:00 pm - 12:00 am  \n
         Sun 1:00 pm - 11:00 pm"
+
+  oth: "Old Teahouse Hours: \n
+        Mon 11:00 am - 12:00 am \n
+        Tue 11:00 am - 12:00 am \n
+        Wed 11:00 am - 12:00 am \n
+        Thu 11:00 am - 2:00 am \n
+        Fri 11:00 am - 2:00 am \n 
+        Sat 12:00 pm - 12:00 am \n
+        Sun 12:00 pm - 12:00 am "
 }
 module.exports = (robot) ->
 
   robot.respond /kft hours/i, (msg) ->
     msg.send hours["kft"]
-    
+
+  robot.respond /oth hours/i, (msg) ->
+    msg.send hours["oth"]
+
 
   
