@@ -18,7 +18,7 @@ htmlparser = require "htmlparser"
 Select = require("soupselect").select
 
 module.exports = (robot) ->
-  robot.hear /members/i, (res) ->
+  robot.respond /members/i, (msg) ->
     msg.http("http://yamatai-taiko.com/members/current/").get() (err, res, body) ->
       handler = new htmlparser.DefaultHandler()
       parser = new htmlparser.Parser(handler)
