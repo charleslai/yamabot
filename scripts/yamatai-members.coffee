@@ -18,15 +18,25 @@ htmlparser = require "htmlparser"
 Select = require("soupselect").select
 
 module.exports = (robot) ->
-  robot.respond /members/i, (msg) ->
-    msg.http("http://yamatai-taiko.com/members/current/").get() (err, res, body) ->
+  
+  fetchNames = (msg, url) ->
+    msg.http(url).get() (err, res, body) ->
       handler = new htmlparser.DefaultHandler()
       parser = new htmlparser.Parser(handler)
       parser.parseComplete(body)
       
-      members = Select handler.dom, "div.name"
+      names = Select handler.dom, "div.name"
       response = ""
-      response += (member.children[0].raw + "\n") for member in members
+      response += (name.children[0].raw + "\n") for name in names
 
       msg.send response
+  
+  robot.respond /members/i, (msg) ->
+      fetchNames(msg, "http://yamatai-taiko.com/members/current/")
+  
+  robot.respond /alumni/i, (msg) ->
+      fetchNames(msg, "http://yamatai-taiko.com/members/alumni/")
+      
+
+      
       
