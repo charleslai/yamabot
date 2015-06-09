@@ -14,7 +14,6 @@ imgs = {
   mcnanny: "imgur link here"
 }
 
-
 module.exports = (robot) ->
   
   # Specific Images
