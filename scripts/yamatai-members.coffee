@@ -26,8 +26,7 @@ module.exports = (robot) ->
       
       members = Select handler.dom, "name"
       response = ""
-      for member in members {
-        response += member + "\n"
-      }
+      response += member + "\n" for member in members
+
       msg.send response
       
