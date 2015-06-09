@@ -24,9 +24,9 @@ module.exports = (robot) ->
       parser = new htmlparser.Parser(handler)
       parser.parseComplete(body)
       
-      members = Select handler.dom, "name"
+      members = Select handler.dom, "div.name"
       response = ""
-      response += member + "\n" for member in members
+      response += (member.children[0].raw + "\n") for member in members
 
       msg.send response
       
