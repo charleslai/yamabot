@@ -19,7 +19,11 @@
     "hubot-shipit": "^0.2.0",
     "hubot-slack": "^3.3.0",
     "hubot-youtube": "^1.0.0",
-    "yelp": "0.1.1"
+    "hubot-cron": ">= 0.1.0",
+    "yelp": "0.1.1",
+    "chrono-node": "^0.1.10",
+    "moment": "^2.8.1",
+    "lodash": "^2.4.1"
   },
   "engines": {
     "node": "0.10.x"
