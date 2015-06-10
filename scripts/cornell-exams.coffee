@@ -27,7 +27,11 @@ module.exports = (robot) ->
         $ = cheerio.load(body)
         schedule = $('pre').text()
         lines = schedule.split('\n')
-        msg.send line for line in lines when line.indexOf(class_code) != -1
+        result = line for line in lines when line.indexOf(class_code) != -1
+        if result
+          msg.send result
+        else
+          msg.send "That class isn't on this semester's schedule."
   
   robot.respond /when are ([A-Z]{2,5}\s[0-9]{4}) exams/i, (msg) ->
     class_code = msg.match[1].toUpperCase()
