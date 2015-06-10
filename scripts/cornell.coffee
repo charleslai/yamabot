@@ -2,13 +2,16 @@
 #   Useful hubot script for Cornell
 #   
 # Dependencies:
-#   None
+#   "cheerio": "0.7.0"
 #
 # Configuration:
 #   None
 #
 # Commands:
 #   yamabot cornell - Placeholder
+#   yamabot is cornell open - checks university operating status
+
+cheerio = require("cheerio")
 
 hours = {
   kft: "*Kung-fu Tea Hours*: \n
@@ -50,6 +53,15 @@ module.exports = (robot) ->
 
   robot.respond /chipotle hours/i, (msg) ->
     msg.send hours["chipotle"]
+    
+  # Operating status =================
+  robot.respond /is cornell open/i, (msg) ->
+    msg.http("http://www.cornell.edu/status/").get() (err, res, body) ->
+      $ = cheerio.load(body)
+      if res.statusCode != 200
+        msg.send "I can't connect to the Cornell website right now."
+      else
+        msg.send $('h2.pagetitle').text()
 
 
 
