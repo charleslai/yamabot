@@ -8,7 +8,7 @@
 #   None
 #
 # Commands:
-#   yamabot when are <class code> exams - retrieves exam dates for a class
+#   yamabot when are <space-separated class codes> exams - retrieves exam dates
 #     e.g. "yamabot when are AEM 1200 exams"
 #     From Jan-Jun, uses Spring schedule, Fall for other months
 #
@@ -34,10 +34,10 @@ module.exports = (robot) ->
           msg.send "That class isn't on this semester's schedule."
   
   robot.respond /when are ([A-Z]{2,5}\s[0-9]{4}) exams/i, (msg) ->
-    class_code = msg.match[1].toUpperCase()
     current_date = new Date()
     month = current_date.getMonth()+1
-    if month >=7
+    class_code = msg.match[1].toUpperCase()
+    if month >=6
       fetchExamDate(msg, "https://registrar.cornell.edu/Sched/PRELF.html", class_code)
     else
       fetchExamDate(msg, "https://registrar.cornell.edu/Sched/PRELS.html", class_code)
