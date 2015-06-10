@@ -11,6 +11,7 @@
 #
 # Commands:
 #   yamabot members - list members
+#   yamabot alumni - list alumni
 #
 # Author:
 #   nyanya
