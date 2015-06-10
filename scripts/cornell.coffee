@@ -63,7 +63,6 @@ module.exports = (robot) ->
         msg.send "I can't connect to the Cornell website right now."
       else
         msg.send $('h2.pagetitle').text()
-        msg.send $('div#maincontent').text()
   
   # Exams ============================
   fetchExamDate = (msg, url, class_code) ->
