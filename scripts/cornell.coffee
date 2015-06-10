@@ -10,6 +10,7 @@
 # Commands:
 #   yamabot cornell - Placeholder
 #   yamabot is cornell open - checks university operating status
+#   yamabot when are <class code> exams - retrieves exam dates
 
 cheerio = require("cheerio")
 
@@ -62,6 +63,31 @@ module.exports = (robot) ->
         msg.send "I can't connect to the Cornell website right now."
       else
         msg.send $('h2.pagetitle').text()
+        msg.send $('div#maincontent').text()
+  
+  # Exams ============================
+  fetchExamDate = (msg, url, class_code) ->
+    msg.http(url).get() (err, res, body) ->
+      if res.statusCode != 200
+        msg.send "I can't connect to the Cornell website right now."
+      else
+        $ = cheerio.load(body)
+        schedule = $('pre').text()
+        lines = schedule.split('\n')
+        result = line for line in lines when line.indexOf(class_code) != -1
+        if result
+          msg.send result
+        else
+          msg.send "That class isn't on this semester's schedule."
+  
+  robot.respond /when are ([A-Z]{2,5}\s[0-9]{4}) exams/i, (msg) ->
+    current_date = new Date()
+    month = current_date.getMonth()+1
+    class_code = msg.match[1].toUpperCase()
+    if month >=6
+      fetchExamDate(msg, "https://registrar.cornell.edu/Sched/PRELF.html", class_code)
+    else
+      fetchExamDate(msg, "https://registrar.cornell.edu/Sched/PRELS.html", class_code)
 
 
 
