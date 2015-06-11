@@ -5,10 +5,13 @@
 #   "cheerio": "0.7.0"
 #
 # Configuration:
-#   None
+#   HUBOT_PLACE_API_KEY - Obtained from https://console.developers.google.com
 #
 # Commands:
-#   yamabot cornell - Placeholder
+#   yamabot kft hours - Kung Fu Tea hours
+#   yamabot oth hours - Old Teahouse hours
+#   yamabot chipotle hours - Chipotle hours
+#   yamabot is <restaurant name> open - check if restaurant is open
 #   yamabot is cornell open - checks university operating status
 #   yamabot when are <class code> exams - retrieves exam dates
 
@@ -54,6 +57,32 @@ module.exports = (robot) ->
 
   robot.respond /chipotle hours/i, (msg) ->
     msg.send hours["chipotle"]
+    
+  # Is restaurant open?
+  robot.respond /is (.*) open?/i, (msg) ->
+    unless process.env.HUBOT_PLACE_API_KEY
+      return msg.send "You must configure the HUBOT_PLACE_API_KEY environment variable."
+    query = msg.match[1]
+    robot.http("https://maps.googleapis.com/maps/api/place/nearbysearch/json")
+      .query({
+        key: process.env.HUBOT_PLACE_API_KEY
+        keyword: query
+        location: "42.453459,-76.473532"
+        radius: 5000
+        types: "restaurant|grocery_or_supermarket|meal_delivery|meal_takeaway|bakery|cafe|convenience_store"
+      })
+      .get() (err, res, body) ->
+        json = JSON.parse(body)
+        results = json.results
+        #msg.send result.name for result in results
+        
+        unless results? && results.length > 0
+          return msg.send "I couldn\'t find that restaurant nearby..."
+        
+        if results[0].opening_hours.open_now
+          msg.send "#{results[0].name} is open!"
+        else
+          msg.send "Sorry, #{results[0].name} is closed."
     
   # Operating status =================
   robot.respond /is cornell open/i, (msg) ->
