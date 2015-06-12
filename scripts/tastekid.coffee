@@ -20,6 +20,7 @@ module.exports = (robot) ->
       .query({
         q: query
         limit: 5
+        info: 1
         k: process.env.HUBOT_TASTEKID_API_KEY
       })
       .get() (err, res, body) ->
@@ -32,4 +33,12 @@ module.exports = (robot) ->
         unless results? && results.length > 0
           return msg.send "I couldn\'t find any suggestions for you..."
         
-        msg.send "#{result.Type}: #{result.Name}" for result in results
+        msg.send "If you like #{json.Similar.Info[0].Name}, then check out:"
+        output = ""
+        for result in results
+          output += "#{result.Name} (#{result.Type})"
+          if result.yUrl
+            output += " #{result.yUrl}\n"
+          else
+            output += "\n"
+        msg.send output
