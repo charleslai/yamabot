@@ -113,9 +113,9 @@ module.exports = (robot) ->
     month = current_date.getMonth()+1
     class_code = msg.match[1].toUpperCase()
     if month >=6
-      fetchExamDate(msg, "https://registrar.cornell.edu/Sched/PRELF.html", class_code)
+      fetchExamDate(msg, "https://registrar.cornell.edu/exams/fall-prelim-exam-schedule", class_code)
     else
-      fetchExamDate(msg, "https://registrar.cornell.edu/Sched/PRELS.html", class_code)
+      fetchExamDate(msg, "https://registrar.cornell.edu/exams/fall-prelim-exam-schedule", class_code)
   
   # Live Image =======================
   robot.respond /cornell now/i, (msg) ->
